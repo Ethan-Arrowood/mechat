@@ -1,46 +1,33 @@
-# TCP Group Chat
+# MeChat
 
 A group chat client-server application built on raw TCP sockets.
 
-## How to use
-1. Run tcp server `node index.js`
-2. Connect via `telnet` or `nc`
-```bash
-telnet localhost 8124
-```
-3. Send messages in chat by writing `chat <message>` or `echo <message>` from the client connections
+## Program Flow
+- Instantiate socket
+- Prompt for server details
+- Attempt connection (try again if connection fails)
+- On Connection:
+  - Say hello
+  - Prompt to authenticate
+  - `new <username> <password>`
+    - if user already exists prompt to login instead
+    - else write auth details to data store and prompt user to login with new details
+  - `login <username> <password>`
+    - if incorrect username or password send msg to user to try again
+    - if correct:
+      - check if username is already signed in
+        - if true: prompt user to try a different account
+        - else create connection
+  - Prompt to pick a channel
+    - `connect <channel>`
+      - if channel name exists add user to it, allow user to begin chatting
+      - else, prompt to use `list channels` command to get list of available channels
 
-[GitHub](https://github.com/Ethan-Arrowood/tcp-group-chat)
-
-[Test Coverage](./coverage/lcov-report/index.html)
-
-[Documentation](https://ethan-arrowood.github.io/tcp-group-chat/)
-
-
-## First thoughts
-> Note these first thoughts have evolvde into some more baked ideas. See Proposal WIP below
-Users will launch a client script that allows them to run a couple of predefined commands:
-- `connect <server>` used to connect to a tcp chat server
-- `login <username>` will login to the connected server
-  - _P0_ 
-    - username only
-    - each server has its own user database saved in a JSON store
-  - _P1_
-    - username and password
-    - each server has its own user database saved in a JSON store
-  - _P2_
-    - username and password
-    - all chat servers share a user database saved in a JSON store
-- `list` lists connected users in chat server
-- `chat <message>` send message to server
-- `disconnect` disconnect from current server (and logout of current user if still logged in)
-- `logout` logout of current user but stay connected to server
-- `help` list available commands and what they do
-
-## Proposal [WIP]
-This section contains some more thoughtout ideas for the application. The core functionality will not suffice for an entire final project but will be prioritized as later features will be build on top of it. 
-
-All features should be implemented in an OOP approach for reproducability as well as modular expansion. Consider functional-like paradigms in order to agnostically test fundamental aspects. See the [`IterableCollection.js`](./src/IterableCollection.js) file and its corresponding test file [`IterableCollection.test.js`](./test/IterableCollection.test.js) for an example.
+Additional user controls:
+- ability to logout (`logout` command)
+- ability to disconnect from a channel or swap to another channel (`connect` and `disconnect` commands)
+- ability to send and recieve past messages (`chat` and `history` commands)
+- ability to list channels and users (`list <users|channels>` command)
 
 #### Core functionality:
 - User can connect to a chat server
@@ -69,14 +56,3 @@ All features should be implemented in an OOP approach for reproducability as wel
 - Server logs all traffic
   - messages are not logged; just the 'when/who' sent the message information
 - Complete unit and integration testing
-
-## Documentation
-This section will be a more generalized documentation that will show how to use the modules as compared to the JSDocs documentation which is more functional.
-
-### CommandProcessor.js
-
-### IterableCollection.js
-
-### ClientInstanceCollection.js
-
-### DefaultChatServer.js
