@@ -18,7 +18,8 @@ On Connection:
 Say hello
 Prompt to authenticate
 new <username> <password> 
-if user already exists prompt to login instead
+if user already exists prompt 
+to login instead
 else write auth details to data store and prompt user to login with new details
 login <username> <password> 
 if incorrect username or password send msg to user to try again
@@ -74,6 +75,29 @@ Topics:
   VI. TCP
   VII. The Network Layer
   VIII. IP
+  
+ #Implementation
+  
+  Tools:
+  
+    -Eclipse IDE
+    -Java Programming Language
+    -JavaScript Coding Language
+    -Github Repository
+    -one host computer
+    -one server computer
+    -Online Sources (See below:)
+    
+  #Instructions
+  
+    1.Run MeChat server on server computer
+    2.Run MeChat client on host
+    
+    For client:
+    3. Enter credentials of desired server (IP, port number)
+    4. 
+  
+  
  
 #Works Cited
 
