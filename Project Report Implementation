@@ -1,4 +1,0 @@
-With our MeChat app, we have a server set up in Javascript that communicates with the client program which is in Java.
-Since TCP functionality can be implemented in any coding language, effectively the two programs should be able to coomunicate and the app 
-should be able to run.
-To run the app, first you
