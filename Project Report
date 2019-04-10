@@ -67,8 +67,61 @@ Complete unit and integration testing
 
 Topics:
 
-  I. The Application Layer
-  II. DNS
+  I. The Application Layer:
+    The MeChat app client intiates communication at the application level. 
+    
+    write programs that:
+run on (different) end systems
+communicate over network
+e.g., web server software communicates with browser software
+no need to write software for network-core devices
+network-core devices do not run user applications 
+applications on end systems  allows for rapid app development, propagation
+write programs that:
+run on (different) end systems
+communicate over network
+e.g., web server software communicates with browser software
+no need to write software for network-core devices
+network-core devices do not run user applications 
+applications on end systems  allows for rapid app development, propagation
+
+possible structure of applications:
+peer-to-peer (P2P)
+
+server: permanent IP address
+clients:
+communicate with server
+may be intermittently connected
+
+P2P architecture
+
+no always-on server
+arbitrary end systems directly communicate
+peers request service from other peers, provide service in return to other peers
+self scalability – new peers bring new service capacity, as well as new service demands
+peers are intermittently connected and change IP addresses
+complex management
+
+aside: applications with P2P architectures have client processes & server processes
+
+Addressing processes
+to receive messages, process  must have identifier
+host device has unique 32-bit IP address
+identifier includes both IP address and port numbers associated with process on host.
+
+
+
+Sockets
+process sends/receives messages to/from its socket
+socket analogous to door
+sending process shoves message out door
+sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process
+
+
+  II. DNS:
+  
+  
+  
   III. Web and HTTP
   IV. Socket Programming
   V. The Transport Layer
@@ -84,8 +137,8 @@ Topics:
     -Java Programming Language
     -JavaScript Coding Language
     -Github Repository
-    -one host computer
-    -one server computer
+    -host computer
+    -server computer
     -Online Sources (See below:)
     
   #Instructions
@@ -94,8 +147,14 @@ Topics:
     2.Run MeChat client on host
     
     For client:
-    3. Enter credentials of desired server (IP, port number)
-    4. 
+    3. Enter address information of desired server (IP, port number)
+    4. When prompted, create username and password
+    5. If user is already existing, enter credentials and log-in
+    6. Once logged in, begin chat
+    7. Client will encrypt message and send it to the server
+    8. Server will decrypt and send key to designated user
+    9. All messages between users will continue in similar fashion
+    10. User may logout 
   
   
  
