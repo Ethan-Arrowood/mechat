@@ -141,15 +141,39 @@ also called “default name server”
 when host makes DNS query, query is sent to its local DNS server
 has local cache of recent name-to-address translation pairs (but may be out of date!)
 acts as proxy, forwards query into hierarchy
+  
+ // III. Web and HTTP //
+ 
+  III. Socket Programming:
+  
+  TCP: reliable, byte stream-oriented 
+  
+Application Example:
+client reads a line of characters (data) from its keyboard and sends data to server
+server receives the data and converts characters to uppercase
+server sends modified data to client
+client receives modified data and displays line on its screen
 
+Socket programming with TCP
+client must contact server
+server process must first be running
+server must have created socket (door) that welcomes client’s contact
+client contacts server by:
+Creating TCP socket, specifying IP address, port number of server process
+when client creates socket: client TCP establishes connection to server TCP
+when contacted by client, server TCP creates new socket for server process to communicate with that particular client
+allows server to talk with multiple clients
+source port numbers used to distinguish clients (more in Chap 3)
+application viewpoint:
+TCP provides reliable, in-order
+byte-stream transfer (“pipe”) 
+between client and server
 
   
-  III. Web and HTTP
-  IV. Socket Programming
-  V. The Transport Layer
-  VI. TCP
-  VII. The Network Layer
-  VIII. IP
+  IV. The Transport Layer
+  V. TCP
+  VI. The Network Layer
+  VII. IP
   
  #Implementation
   
