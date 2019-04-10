@@ -120,7 +120,29 @@ sending process relies on transport infrastructure on other side of door to deli
 
   II. DNS:
   
-  
+  Domain Name System:
+distributed database implemented in hierarchy of many name servers
+application-layer protocol: hosts, name servers communicate to resolve names (address/name translation)
+note: core Internet function, implemented as application-layer protocol
+complexity at network’s “edge”
+
+DNS services
+hostname to IP address translation
+
+authoritative DNS servers: 
+organization’s own DNS server(s), providing authoritative hostname to IP mappings for organization’s named hosts 
+can be maintained by organization or service provider
+
+Local DNS name server
+
+does not strictly belong to hierarchy
+each ISP (residential ISP, company, university) has one
+also called “default name server”
+when host makes DNS query, query is sent to its local DNS server
+has local cache of recent name-to-address translation pairs (but may be out of date!)
+acts as proxy, forwards query into hierarchy
+
+
   
   III. Web and HTTP
   IV. Socket Programming
