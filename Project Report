@@ -1,7 +1,9 @@
 #Problem
 
-To be able to use a chat application that utilizes a TCP connection as well as sockets to communicate between users by implementing 
-authentication, user-designated input for server selection, encryption and additional log-in/log-out functionality.
+To be able to use the MeChat app, a network application (with peer-to-peer architecture) that utilizes a TCP connection as well as 
+sockets to communicate between users by implementing authentication, user-designated input for server selection, encryption, user 
+account creation, log-in/log-out functionality, logging, communication between clients, sending and receiving past messages, listing
+channels and users, and the ability to disconnect from the server.
 
 #Design Workflow
 
@@ -68,41 +70,18 @@ Complete unit and integration testing
 Topics:
 
   I. The Application Layer:
-    The MeChat app client intiates communication at the application level. 
-    
-    write programs that:
-run on (different) end systems
-communicate over network
-e.g., web server software communicates with browser software
-no need to write software for network-core devices
-network-core devices do not run user applications 
-applications on end systems  allows for rapid app development, propagation
-write programs that:
-run on (different) end systems
-communicate over network
-e.g., web server software communicates with browser software
-no need to write software for network-core devices
-network-core devices do not run user applications 
-applications on end systems  allows for rapid app development, propagation
-
-possible structure of applications:
-peer-to-peer (P2P)
-
-server: permanent IP address
-clients:
-communicate with server
-may be intermittently connected
-
-P2P architecture
-
-no always-on server
-arbitrary end systems directly communicate
-peers request service from other peers, provide service in return to other peers
-self scalability – new peers bring new service capacity, as well as new service demands
-peers are intermittently connected and change IP addresses
-complex management
-
-aside: applications with P2P architectures have client processes & server processes
+    The MeChat app client intiates communication at the application level. Programs were written that utilize different end systems.
+    In creating a network app, the client and server should be able to communicate over a network. Applications on end systems allows for rapid 
+    app development and propagation. The Client program and Server programs run on different end systems. Still, they are able to 
+    communicate over the network.
+    Our app utilizes a peer-to-peer (P2P) architecture. There is no always-on server, arbitrary end systems directly communicate, and 
+    peers request service from other peers and provide service in return to other peers. 
+    Applications with P2P architectures have client processes (Client.java) & server processes (Server.js).
+    In addition, in terms of the Application Layer, ockets
+process sends/receives messages to/from its socket
+socket analogous to door
+sending process shoves message out door
+sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process
 
 Addressing processes
 to receive messages, process  must have identifier
@@ -111,11 +90,7 @@ identifier includes both IP address and port numbers associated with process on 
 
 
 
-Sockets
-process sends/receives messages to/from its socket
-socket analogous to door
-sending process shoves message out door
-sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process
+
 
 
   II. DNS:
@@ -195,10 +170,89 @@ bandwidth guarantees
   
   V. TCP
   
-  
+ Connection Management
+ before exchanging data, sender/receiver “handshake”:
+agree to establish connection (each knowing the other willing to establish connection)
+agree on connection parameters
+
+TCP: closing a connection
+ client, server each close their side of connection
+send TCP segment with FIN bit = 1
+ respond to received FIN with ACK
+on receiving FIN, ACK can be combined with own FIN
+ simultaneous FIN exchanges can be handled
+
+Fairness, parallel TCP connections
+ application can open multiple parallel connections between two hosts
+ web browsers do this 
+ e.g., link of rate R with 9 existing connections:
+new app asks for 1 TCP, gets rate R/10
+new app asks for 11 TCPs, gets R/2 
+
   
   VI. The Network Layer
+  
+  transport segment from sending to receiving host 
+on sending side encapsulates segments into datagrams
+on receiving side, delivers segments to transport layer
+network layer protocols in every host, router
+router examines header fields in all IP datagrams passing through it
+
+Two key network-layer functions
+network-layer functions:
+forwarding: move packets from router’s input to appropriate router output
+routing: determine route taken by packets from source to destination
+routing algorithms
+
+Input port functions
+physical layer:
+bit-level reception
+data link layer:
+e.g., Ethernet
+see chapter 5
+
+Output ports
+buffering required when datagrams arrive from fabric faster than the transmission rate
+ scheduling discipline chooses among queued datagrams for transmission
+
+  
   VII. IP
+  
+  IP protocol
+ addressing conventions
+ datagram format
+ packet handling conventions
+ 
+ IP addressing: introduction
+ IP address: 32-bit identifier for host, router interface 
+interface: connection between host/router and physical link
+router’s typically have multiple interfaces
+host typically has one or two interfaces (e.g., wired Ethernet, wireless 802.11)
+IP addresses associated with each interface
+
+Subnet Masks
+Subnet masks, also call netmasks, are 32-bit numbers, like IP addresses
+The first N bits are 1 and the remaining   32-N bits are 0
+Written in dotted-decimal notation
+Example: 255.255.0.0
+The N tells you how many bits in the associated IP address are in the network address
+
+Subnets
+IP address: 
+subnet part - high order bits
+host part - low order bits 
+what’s a subnet ?
+device interfaces with same subnet part of IP address
+can physically reach each other without intervening router
+
+IP Addressing – The Subnet Mask
+The network portion of the IP address assigned to all hosts on a network segment must be the same.
+All hosts on a segment have the same subnet mask.
+
+Types of Addresses
+Host:The unique address assigned to each host in a network.
+
+
   
  #Implementation
   
@@ -226,6 +280,8 @@ bandwidth guarantees
     8. Server will decrypt and send key to designated user
     9. All messages between users will continue in similar fashion
     10. User may logout 
+  
+  #Demo Video
   
   
  
