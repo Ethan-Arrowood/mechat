@@ -13,57 +13,56 @@ should be able to run.
 
 Steps:
 
-Instantiate socket
-Prompt for server details
-Attempt connection (try again if connection fails)
+-Instantiate socket
+-Prompt for server details
+-Attempt connection (try again if connection fails)
 On Connection: 
-Say hello
-Prompt to authenticate
-new <username> <password> 
-if user already exists prompt 
-to login instead
-else write auth details to data store and prompt user to login with new details
-login <username> <password> 
-if incorrect username or password send msg to user to try again
+-Say hello
+-Prompt to authenticate
+-new <username> <password> 
+-if user already exists prompt to login instead
+-else write auth details to data store and prompt user to login with new details
+-login <username> <password> 
+-if incorrect username or password send msg to user to try again
 if correct: 
-check if username is already signed in 
-if true: prompt user to try a different account
-else create connection
-Prompt to pick a channel 
-connect <channel> 
-if channel name exists add user to it, allow user to begin chatting
-else, prompt to use list channels command to get list of available channels
+-check if username is already signed in 
+-if true: prompt user to try a different account
+-else create connection
+-Prompt to pick a channel 
+-connect <channel> 
+-if channel name exists add user to it, allow user to begin chatting
+-else, prompt to use list channels command to get list of available channels
 Additional user controls:
-ability to logout (logout command)
-ability to disconnect from a channel or swap to another channel (connect and disconnect commands)
-ability to send and recieve past messages (chat and history commands)
-ability to list channels and users (list <users|channels> command)
+-ability to logout (logout command)
+-ability to disconnect from a channel or swap to another channel (connect and disconnect commands)
+-ability to send and recieve past messages (chat and history commands)
+-ability to list channels and users (list <users|channels> command)
 Core functionality:
-User can connect to a chat server
-User can login to an account on the server
-User can send messages that are broadcasted to other users on the server
-Use can logout from their account 
-Should keep user connected to server
-Use can disconnect from the chat server 
-Auto-logout if still authenticated
+-User can connect to a chat server
+-User can login to an account on the server
+-User can send messages that are broadcasted to other users on the server
+-User can logout from their account 
+  a) Should keep user connected to server
+-User can disconnect from the chat server 
+  b) Auto-logout if still authenticated
 Future Features (in no particular order or importance):
-Server can have multiple channels
-Users can connect to a server and then select a channel
-Users have a single login for all servers 
-Servers share an authentication database
-User client allows the user to select what server they want to connect to
-There is an admin client for having more control over the server
-Users can list all other users in a channel/server
-Messages are encrypted
-Users login with username and password
-Application has an UI 
-Mobile (React Native)
-Web (React)
-Desktop (Electron)
-Server's utilize multiprocessing and multithreading to support client connections or channels
-Server logs all traffic 
-messages are not logged; just the 'when/who' sent the message information
-Complete unit and integration testing
+-Server can have multiple channels
+-Users can connect to a server and then select a channel
+-Users have a single login for all servers 
+  a) Servers share an authentication database
+-User client allows the user to select what server they want to connect to
+-There is an admin client for having more control over the server
+-Users can list all other users in a channel/server
+-Messages are encrypted
+-Users login with username and password
+-Application has an UI 
+  a) Mobile (React Native)
+  b) Web (React)
+  c) Desktop (Electron)
+-Server's utilize multiprocessing and multithreading to support client connections or channels
+-Server logs all traffic 
+  a) messages are not logged; just the 'when/who' sent the message information
+-Complete unit and integration testing
 
 #Building Up To the Solution
 
@@ -77,81 +76,52 @@ Topics:
     Our app utilizes a peer-to-peer (P2P) architecture. There is no always-on server, arbitrary end systems directly communicate, and 
     peers request service from other peers and provide service in return to other peers. 
     Applications with P2P architectures have client processes (Client.java) & server processes (Server.js).
-    In addition, in terms of the Application Layer, ockets
-process sends/receives messages to/from its socket
-socket analogous to door
-sending process shoves message out door
-sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process
-
-Addressing processes
-to receive messages, process  must have identifier
-host device has unique 32-bit IP address
-identifier includes both IP address and port numbers associated with process on host.
-
-
-
-
-
+    In addition, in terms of the Application Layer, sockets process sends/receives messages to/from its socket. 
+    To receive messages, a process  must have an identifier. A host device has a unique 32-bit IP address. The identifier includes both 
+    IP address and port numbers associated with a process on a host.
 
   II. DNS:
-  
-  Domain Name System:
-distributed database implemented in hierarchy of many name servers
-application-layer protocol: hosts, name servers communicate to resolve names (address/name translation)
-note: core Internet function, implemented as application-layer protocol
-complexity at network’s “edge”
+    Included with the Application Layer is the Domain Name System protocol, which utilizes a distributed database implemented in 
+    the hierarchy of many name servers. With this application-layer protocol, hosts and name servers communicate to resolve names 
+    (address/name translation), in the case of MeChat the host is the computer running the Client program, and the name server is the 
+    computer running the Server.js program. DNS is a core Internet function, which is implemented as an application-layer protocol and 
+    made useful for our specific purposes. One of the actions performed by DNS services is the hostname to IP address translation.
 
-DNS services
-hostname to IP address translation
-
-authoritative DNS servers: 
-organization’s own DNS server(s), providing authoritative hostname to IP mappings for organization’s named hosts 
-can be maintained by organization or service provider
-
-Local DNS name server
-
-does not strictly belong to hierarchy
-each ISP (residential ISP, company, university) has one
-also called “default name server”
-when host makes DNS query, query is sent to its local DNS server
-has local cache of recent name-to-address translation pairs (but may be out of date!)
-acts as proxy, forwards query into hierarchy
-  
- // III. Web and HTTP //
- 
   III. Socket Programming:
+    The socket programming used in the MeChat app makes it possible for the application to open a connection via a socket by using 
+    TCP (Transmission Control Protocol). TCP is a reliable, byte stream-oriented Transport Layer protocol, which is why we implemented
+    lines of code that give stream functionality such as the following:
+    
+     BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
+     
+     ataOutputStream outToServer = new DataOutputStream( clientSocket.getOutputStream()); 
   
-  TCP: reliable, byte stream-oriented 
-  
-Application Example:
-client reads a line of characters (data) from its keyboard and sends data to server
-server receives the data and converts characters to uppercase
-server sends modified data to client
-client receives modified data and displays line on its screen
-
-Socket programming with TCP
-client must contact server
-server process must first be running
-server must have created socket (door) that welcomes client’s contact
-client contacts server by:
-Creating TCP socket, specifying IP address, port number of server process
-when client creates socket: client TCP establishes connection to server TCP
-when contacted by client, server TCP creates new socket for server process to communicate with that particular client
-allows server to talk with multiple clients
-source port numbers used to distinguish clients (more in Chap 3)
-application viewpoint:
-TCP provides reliable, in-order
-byte-stream transfer (“pipe”) 
-between client and server
+    With socket programming using TCP, our Client.java file must contact the server (Server.js), however the server process must first 
+    be running.
+    The server must have created a socket (door) that welcomes client’s contact. Thereafter the client contacts the server by:
+    Creating a TCP socket, specifying the IP address and port number of the server process. In the chat application's case, the user 
+    provides the IP address and port number of the desired server he/she wants to chat on, and the input is then read in to the 
+    following statement:
+    
+    Socket clientSocket = new Socket(ip_address, port)
+    
+    When the client creates a socket: client TCP establishes connection to server TCP
+  when contacted by client, server TCP creates new socket for server process to communicate with that particular client
+  allows server to talk with multiple clients
+  source port numbers used to distinguish clients (more in Chap 3)
+  application viewpoint:
+  TCP provides reliable, in-order
+  byte-stream transfer (“pipe”) 
+  between client and server
 
   
   IV. The Transport Layer
    provide logical communication between app processes running on different hosts
- transport protocols run in end systems 
-send side: breaks app messages into segments, passes to  network layer
-rcv side: reassembles segments into messages, passes to app layer
- more than one transport protocol available to apps
-Internet: TCP and UDP
+  transport protocols run in end systems 
+  send side: breaks app messages into segments, passes to  network layer
+  rcv side: reassembles segments into messages, passes to app layer
+  more than one transport protocol available to apps
+  Internet: TCP and UDP
 
   network layer: logical communication between hosts
  transpsort layer: logical communication between processes 
