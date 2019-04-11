@@ -87,7 +87,26 @@ Topics:
     computer running the Server.js program. DNS is a core Internet function, which is implemented as an application-layer protocol and 
     made useful for our specific purposes. One of the actions performed by DNS services is the hostname to IP address translation.
 
-  III. Socket Programming:
+  III. The Transport Layer:
+   In Networking, this layer provides logical communication between app processes running on different hosts. The transport protocols 
+   run in the end systems. On the sender's side, app messages are broken into segments and passed to the network layer. As for the
+   receiver's side, those segments are reassembled into messages, and passed to the app layer. There is more than one transport protocol 
+   available to apps. However, MeChat uses TCP only.
+   The Transport Layer, in the case of the MeChat application and all other applications, can be summed up as logical communication 
+   between hosts, with which TCP can provide reliable, in-order delivery.
+   It also relies on and enhances network layer services, being the next layer.
+
+  IV. TCP
+  
+    Transmission Control Protocol (TCP) offers connection management. Before the exchanging of data, the sender and receiver engage
+    in what is known as a “three-way handshake.” They each agree to establish connection (each knowing the other is willing to establish 
+    the connection), and they also agree on connection parameters.
+    In closing a connection, the client and server each close their side of the connection.A TCP segment is sent with FIN bit = 1. 
+    A response is then sent with ACK. On receiving FIN, ACK can be combined with own FIN (Note: simultaneous FIN exchanges can be 
+    handled).
+    Parallel TCP connections may be established. An application can open multiple parallel connections between two hosts.
+  
+  V. Socket Programming:
     The socket programming used in the MeChat app makes it possible for the application to open a connection via a socket by using 
     TCP (Transmission Control Protocol). TCP is a reliable, byte stream-oriented Transport Layer protocol, which is why we implemented
     lines of code that give stream functionality such as the following:
@@ -105,126 +124,42 @@ Topics:
     
     Socket clientSocket = new Socket(ip_address, port)
     
-    When the client creates a socket: client TCP establishes connection to server TCP
-  when contacted by client, server TCP creates new socket for server process to communicate with that particular client
-  allows server to talk with multiple clients
-  source port numbers used to distinguish clients (more in Chap 3)
-  application viewpoint:
-  TCP provides reliable, in-order
-  byte-stream transfer (“pipe”) 
-  between client and server
-
-  
-  IV. The Transport Layer
-   provide logical communication between app processes running on different hosts
-  transport protocols run in end systems 
-  send side: breaks app messages into segments, passes to  network layer
-  rcv side: reassembles segments into messages, passes to app layer
-  more than one transport protocol available to apps
-  Internet: TCP and UDP
-
-  network layer: logical communication between hosts
- transpsort layer: logical communication between processes 
-relies on, enhances, network layer services
-
-  Internet transport-layer protocol
-  reliable, in-order delivery (TCP)
-congestion control 
-flow control
-connection setup
-unreliable, unordered delivery: UDP
-no-frills extension of “best-effort” IP
-services not available: 
-delay guarantees
-bandwidth guarantees
-  
-  V. TCP
-  
- Connection Management
- before exchanging data, sender/receiver “handshake”:
-agree to establish connection (each knowing the other willing to establish connection)
-agree on connection parameters
-
-TCP: closing a connection
- client, server each close their side of connection
-send TCP segment with FIN bit = 1
- respond to received FIN with ACK
-on receiving FIN, ACK can be combined with own FIN
- simultaneous FIN exchanges can be handled
-
-Fairness, parallel TCP connections
- application can open multiple parallel connections between two hosts
- web browsers do this 
- e.g., link of rate R with 9 existing connections:
-new app asks for 1 TCP, gets rate R/10
-new app asks for 11 TCPs, gets R/2 
-
+    When the client creates a socket: client TCP establishes connection to server TCP. When contacted by client, server TCP creates new 
+    socket for the server process to communicate with that particular client. This allows the MeChat server to talk with multiple 
+    clients. The source port numbers are used to distinguish each client.
+    In conclusion, TCP provides reliable, in-order service. Byte-stream transfer (“pipe”) 
+    is allowed between the client and the server.
   
   VI. The Network Layer
   
-  transport segment from sending to receiving host 
-on sending side encapsulates segments into datagrams
-on receiving side, delivers segments to transport layer
-network layer protocols in every host, router
-router examines header fields in all IP datagrams passing through it
-
-Two key network-layer functions
-network-layer functions:
-forwarding: move packets from router’s input to appropriate router output
-routing: determine route taken by packets from source to destination
-routing algorithms
-
-Input port functions
-physical layer:
-bit-level reception
-data link layer:
-e.g., Ethernet
-see chapter 5
-
-Output ports
-buffering required when datagrams arrive from fabric faster than the transmission rate
- scheduling discipline chooses among queued datagrams for transmission
-
+  A transport segment is sent from the sending to receiving host. On the sending side,  segments are encapsulated into datagrams. As for
+  the receiving side, segments are delivered to the Transport Layer. There are network layer protocols in every host, which is one of 
+  the key ingredients as to how the MeChat client communicates with the server.
+  In terms of input port functions, at the physical layer bit-level reception occurs. At the data link layer, the Ethernet protocol is 
+  used. As for the output ports, buffering is required when datagrams arrive from fabric faster than the transmission rate. The 
+  scheduling discipline chooses among queued datagrams for transmission.
   
   VII. IP
   
-  IP protocol
- addressing conventions
- datagram format
- packet handling conventions
- 
- IP addressing: introduction
- IP address: 32-bit identifier for host, router interface 
-interface: connection between host/router and physical link
-router’s typically have multiple interfaces
-host typically has one or two interfaces (e.g., wired Ethernet, wireless 802.11)
-IP addresses associated with each interface
+  The IP protocol is the primary Network Layer protocol. This is where the IP address of the MeChat server comes in handy. 
+  The protocol features addressing conventions, datagram format, and packet handling conventions. In examining the IP address itself,
+  it is a 32-bit identifier for host, router interface. The interface is for connection between host/router. Physical link routers 
+  typically have multiple interfaces. A host typically has one or two interfaces (e.g., wired Ethernet, wireless 802.11) IP addresses 
+  are associated with each interface.
+  Subnet masks, also called netmasks, are 32-bit numbers, like IP addresses. The first N bits are 1, and the remaining 32-N bits are 0,
+  written in dotted-decimal notation: example: 255.255.0.0. The N tells you how many bits in the associated IP address are in the 
+  network address.It is not immediately obvious, but since the MeChat app is a networking app, ultimately subnet masks will be used.
+  Subnets consist of:
+    -an IP address: 
+    -a subnet part - high order bits
+    -a host part - low order bits 
+  The purpose of the subnet is so device interfaces with the same subnet part of an IP address can physically reach each other without 
+  an intervening router. The Subnet Mask has some rules: 
+    -The network portion of the IP address assigned to all hosts on a network segment must be the same.
+    -All hosts on a segment must have the same subnet mask.
+  Finally,types of addresses include the host address, a unique address assigned to each host in a network.
 
-Subnet Masks
-Subnet masks, also call netmasks, are 32-bit numbers, like IP addresses
-The first N bits are 1 and the remaining   32-N bits are 0
-Written in dotted-decimal notation
-Example: 255.255.0.0
-The N tells you how many bits in the associated IP address are in the network address
-
-Subnets
-IP address: 
-subnet part - high order bits
-host part - low order bits 
-what’s a subnet ?
-device interfaces with same subnet part of IP address
-can physically reach each other without intervening router
-
-IP Addressing – The Subnet Mask
-The network portion of the IP address assigned to all hosts on a network segment must be the same.
-All hosts on a segment have the same subnet mask.
-
-Types of Addresses
-Host:The unique address assigned to each host in a network.
-
-
-  
- #Implementation
+  #Implementation
   
   Tools:
   
