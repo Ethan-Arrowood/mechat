@@ -233,13 +233,16 @@ const server = net.createServer(client => {
             client.write(`\x1b[97mThe \x1b[32mchat \x1b[97mcommand is for sending a chat message. Syntax: \x1b[32m\`chat <message>\`\x1b[35m\n`)
             break
           case 'list':
-            client.write(`\x1b[97mThe \x1b[32mnew \x1b[97mcommand is for creating a new user. Syntax: \x1b[32m\`new <username> <password>\`\x1b[35m\n`)
+            client.write(`\x1b[97mThe \x1b[32mlist \x1b[97mcommand is for creating a new user. Syntax: \x1b[32m\`new <username> <password>\`\x1b[35m\n`)
             break
           case 'help':
             client.write(`\x1b[97mThe \x1b[32mhelp \x1b[97mcommand is for getting instructions about a command. Leave first argument empty for a list of all available commands. Syntax: \x1b[32m\`help <command>\`\x1b[35m\n`)
             break
+          case 'exit':
+            client.write(`\x1b[97mThe \x1b[32mexit \x1b[97mcommand is for ending the socket connection and exiting MeChat. Syntax: \x1b[32m\`exit\`\x1b[35m\n`)
+            break
           case undefined:
-            client.write(`\x1b[97mAvailable commands include: \x1b[32mnew\x1b[97m, \x1b[32mlogin\x1b[97m, \x1b[32mlogout\x1b[97m, \x1b[32mconnect\x1b[97m, \x1b[32mdisconnect\x1b[97m, \x1b[32mchat\x1b[97m, \x1b[32mlist\x1b[97m, \x1b[32mhelp\x1b[35m\n`)
+            client.write(`\x1b[97mAvailable commands include: \x1b[32mnew\x1b[97m, \x1b[32mlogin\x1b[97m, \x1b[32mlogout\x1b[97m, \x1b[32mconnect\x1b[97m, \x1b[32mdisconnect\x1b[97m, \x1b[32mchat\x1b[97m, \x1b[32mlist\x1b[97m, \x1b[32mexit\x1b[97m, \x1b[32mhelp\x1b[35m\n`)
             break
           default:
             client.write(`\x1b[97mUnrecognized command \x1b[32m\`${arg1}\`\x1b[97m. Try using \x1b[32m\`help\`\x1b[35m\n`)
