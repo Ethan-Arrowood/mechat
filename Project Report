@@ -173,18 +173,22 @@ Topics:
     
   #Instructions
   
-    1.Run MeChat server on server computer
-    2.Run MeChat client on host
+    1.Run MeChat server (server.js) on server computer
+    2.Run MeChat client (ThreadedClient.java) on host (for client 0 and client 1)
     
-    For client:
-    3. Enter address information of desired server (IP, port number)
-    4. When prompted, create username and password
-    5. If user is already existing, enter credentials and log-in
-    6. Once logged in, begin chat
-    7. Client will encrypt message and send it to the server
-    8. Server will decrypt and send key to designated user
-    9. All messages between users will continue in similar fashion
-    10. User may logout 
+    For client (do this for all clients simultaneously):
+    3. Enter IP address of MeChat server: localhost
+    4. Enter port number: 8124 (You should then see message "Welcome to MeChat!")
+    5. Run help command (This will list all available commands; enter list command for a list of users and
+    channels)
+    
+    6. Enter "login <username> <password>"
+    7. If user does not exist, create user account with desired username and password by entering: "new <username> <password>"
+    
+    8. Once logged in, select channel by entering: "connect <channel name>" 
+    9. Before chatting, make sure other users are on same channel
+    10. Users may now begin chatting
+    11. Enter "logout" to log out of chat
   
   #Demo Video
   
