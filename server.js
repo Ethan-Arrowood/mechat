@@ -43,13 +43,14 @@ class MeClient {
 const generator = idGen()
 
 function serverLog (mc, message) {
-  console.log({
-    // rawUser: mc,
-    rawUser: '{ ... }',
-    username: mc.username,
-    id: mc.id,
-    message: message
-  })
+  // console.log({
+  //   // rawUser: mc,
+  //   rawUser: '{ ... }',
+  //   username: mc.username,
+  //   id: mc.id,
+  //   message: message
+  // })
+  console.log(`Client ${mc.id}: ${message}`)
 }
 
 function checkForExistingUser (clientMap, username) {
@@ -233,7 +234,7 @@ const server = net.createServer(client => {
             client.write(`\x1b[97mThe \x1b[32mchat \x1b[97mcommand is for sending a chat message. Syntax: \x1b[32m\`chat <message>\`\x1b[35m\n`)
             break
           case 'list':
-            client.write(`\x1b[97mThe \x1b[32mlist \x1b[97mcommand is for creating a new user. Syntax: \x1b[32m\`new <username> <password>\`\x1b[35m\n`)
+            client.write(`\x1b[97mThe \x1b[32mlist \x1b[97mcommand is for listing channels on the server or users in a channel. Syntax: \x1b[32m\`list {users|channel}\`\x1b[35m\n`)
             break
           case 'help':
             client.write(`\x1b[97mThe \x1b[32mhelp \x1b[97mcommand is for getting instructions about a command. Leave first argument empty for a list of all available commands. Syntax: \x1b[32m\`help <command>\`\x1b[35m\n`)
