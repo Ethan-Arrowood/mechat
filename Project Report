@@ -73,9 +73,10 @@ Topics:
     In creating a network app, the client and server should be able to communicate over a network. Applications on end systems allows for rapid 
     app development and propagation. The Client program and Server programs run on different end systems. Still, they are able to 
     communicate over the network.
-    Our app utilizes a peer-to-peer (P2P) architecture. There is no always-on server, arbitrary end systems directly communicate, and 
-    peers request service from other peers and provide service in return to other peers. 
-    Applications with P2P architectures have client processes (Client.java) & server processes (Server.js).
+    We used a client-server architecture. In terms of the server: there's an always-on host, permanent IP address, and data centers for 
+    scaling. With clients: they communicate with the server, may be intermittently connected, may have dynamic IP addresses and do not \
+    communicate directly with each other.
+
     In addition, in terms of the Application Layer, sockets process sends/receives messages to/from its socket. 
     To receive messages, a process  must have an identifier. A host device has a unique 32-bit IP address. The identifier includes both 
     IP address and port numbers associated with a process on a host.
