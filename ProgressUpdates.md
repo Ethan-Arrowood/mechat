@@ -1,4 +1,4 @@
-# Progress Updates (Jan 7 - April 29)
+# Progress Updates (March 11 - April 5)
 
 ## Week 1 (Mar 11 - Mar 15)
 
