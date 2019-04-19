@@ -2,7 +2,30 @@
 
 A group chat client-server application built on raw TCP sockets.
 
-## Program Flow
+### What?
+
+MeChat is a chat application built on TCP client-server architecture. It has a basic user authentication system and a fully implemented logger for server opertaion diagnostics. Utilizing non-blocking TCP sockets, the application can be connected to via any other non-blocking TCP client. The server is written in JavaScript and our example client is written in Java. The client can be JavaScript, Python, or a bash based utility such as `telnet` or `nc`.
+
+### Why?
+
+To further our understanding of networking programming fundamentals we used Lab assignment #4 as a foundation and added additional features to the group chat server-client application. We explored aspects such as multithreading, authentication, buffers, and IO streams. We also were interested in how the separation of networking layers works. Our hypothesis was that regardless of the language we chose to use, the application should still be able to communicate over TCP because the language is apart of the 'application layer' and TCP implementation is apart of the 'transport layer'.
+
+### How?
+
+We used JavaScript for the server. It is built on Node.js core `net` module in order to create the TCP server and host the socket connections. Node.js operates on a single process, non-blocking event loop; thus the TCP socket connections are also non-blocking. This is an important detail as many basic TCP clients are written in a blocking format and will not work with our server. 
+
+The client is written in Java and utilizes multithreading in order to implement the non-blocking sockets needed to interact with our JavaScript server. It opens 4 IO streams, a user in and out, and a socket in and out. The user in stream is for the user to write messages, the server out is to send that message to the server, the server in is to receive messages from the server, and the user out is to write those server messages back to the user.
+
+## Deliverables
+1. [Client](./ThreadedClient.java) - The multithreaded Java Client
+2. [Server](./server.js) - The Node.js based JavaScript server
+3. [Documentation](./README.md) - This document!
+
+## Plan
+
+Our team met weekly to work on the project and discuss updates. The plan for the project is to follow the following program flow:
+
+### Program Flow
 - Instantiate socket
 - Prompt for server details
 - Attempt connection (try again if connection fails)
@@ -38,7 +61,8 @@ Additional user controls:
 - Use can disconnect from the chat server 
   - Auto-logout if still authenticated
 
-#### Future Features (in no particular order or importance):
+#### Future Features:
+We ideated on some additional features that would make our project even better. They are listed here in no particular order.
 - Server can have multiple channels
 - Users can connect to a server and then select a channel
 - Users have a single login for all servers
@@ -56,3 +80,28 @@ Additional user controls:
 - Server logs all traffic
   - messages are not logged; just the 'when/who' sent the message information
 - Complete unit and integration testing
+
+## Getting Started
+1. Verify you have [`Java`](https://www.java.com/en/) and [`Node.js`](https://nodejs.org/en/) installed on your machine
+2. Clone this repository via `git clone git@github.com:Ethan-Arrowood/mechat.git`
+3. Open two terminal/bash prompts
+4. In the first prompt type `node server.js`
+5. In the second prompt type `javac ./ThreadedClient.java` then `java ThreadedClient`
+6. Enter `localhost` as the server and `8124` as the port
+7. ✨ Start using the application! Use the `help` command if you need context on using different commands.
+
+## Features
+- Authentication
+- Multi User Chat
+- Multi Channel Chat
+- Integrated Help command
+- Non-blocking TCP Chat service
+
+## Demo Video
+
+[Watch it here! 📹](https://www.youtube.com/watch?v=aQhh0UVLb_M)
+
+## Team Members
+- Ethan Arrowood, Programmer
+- Matthew Channing, Programmer
+- Jack Htay, Programmer
