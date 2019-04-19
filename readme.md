@@ -19,7 +19,7 @@ The client is written in Java and utilizes multithreading in order to implement 
 ## Deliverables
 1. [Client](./ThreadedClient.java) - The multithreaded Java Client
 2. [Server](./server.js) - The Node.js based JavaScript server
-3. [Documentation](./README.md) - This document!
+3. [Documentation](./readme.md) - This document!
 
 ## Plan
 
@@ -102,6 +102,6 @@ We ideated on some additional features that would make our project even better. 
 [Watch it here! 📹](https://www.youtube.com/watch?v=aQhh0UVLb_M)
 
 ## Team Members
-- Ethan Arrowood, Programmer
-- Matthew Channing, Programmer
-- Jack Htay, Programmer
+- Ethan Arrowood, Programmer, Lead Author of [Readme.md](./readme.md), [ProgressUpdates.md](./ProgressUpdates.md), and [Demo Video](https://www.youtube.com/watch?v=aQhh0UVLb_M)
+- Matthew Channing, Programmer, Lead Author of [ProjectReport.md](./ProjectReport.md)
+- Jack Htay, Programmer, Lead Author of [Presentation](./MeChat.pptx)
